@@ -23,6 +23,20 @@ class FlutterAbsolutePathPlugin() : MethodCallHandler, FlutterPlugin {
         }
     }
 
+    private fun onAttachedToEngine(applicationContext: Context?, messenger: BinaryMessenger?) {
+        synchronized(initializationLock) {
+            if (flutterChannel != null) {
+                return
+            }
+            context = applicationContext
+            flutterChannel =
+                MethodChannel(
+                    messenger,
+                    "com.kasem.flutter_absolute_path"
+                )
+            flutterChannel.setMethodCallHandler(this)
+        }
+    }
     override fun onMethodCall(call: MethodCall, result: MethodChannel.Result) {
         when {
             call.method == "getAbsolutePath" -> {
