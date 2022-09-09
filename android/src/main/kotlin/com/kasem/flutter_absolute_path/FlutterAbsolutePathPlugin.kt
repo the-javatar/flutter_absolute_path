@@ -37,6 +37,7 @@ class FlutterAbsolutePathPlugin() : MethodCallHandler, FlutterPlugin {
             flutterChannel.setMethodCallHandler(this)
         }
     }
+    
     override fun onMethodCall(call: MethodCall, result: MethodChannel.Result) {
         when {
             call.method == "getAbsolutePath" -> {
