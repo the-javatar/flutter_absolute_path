@@ -1,22 +1,16 @@
 package com.kasem.flutter_absolute_path
 
 import android.content.Context
-import android.content.Intent
 import android.net.Uri
-import android.os.Environment
+import io.flutter.embedding.engine.plugins.FlutterPlugin
 import io.flutter.plugin.common.MethodCall
 import io.flutter.plugin.common.MethodChannel
 import io.flutter.plugin.common.MethodChannel.MethodCallHandler
-import io.flutter.plugin.common.MethodChannel.Result
-import io.flutter.plugin.common.PluginRegistry.Registrar
-import android.util.Log
-import android.content.pm.ProviderInfo
-import android.content.pm.PackageManager
-import android.content.pm.PackageInfo
-import java.security.Provider
 
 
-class FlutterAbsolutePathPlugin(private val context: Context) : MethodCallHandler {
+class FlutterAbsolutePathPlugin() : MethodCallHandler, FlutterPlugin {
+
+    private var context: Context? = null
 
     companion object {
         @JvmStatic
@@ -32,24 +26,22 @@ class FlutterAbsolutePathPlugin(private val context: Context) : MethodCallHandle
                 val uriString = call.argument<Any>("uri") as String
                 val uri = Uri.parse(uriString)
 
-//                val provider = applicationProviders?.firstOrNull { uri.authority == it.authority }
-//                if (provider != null) {
-//                    val folderPath = Environment.getExternalStorageDirectory().path + "/Pictures"
-//                    result.success("$folderPath/${uri.lastPathSegment}")
-//                    return
-//                }
-
                 result.success(FileDirectory.getAbsolutePath(this.context, uri))
             }
             else -> result.notImplemented()
         }
     }
 
-//    val applicationProviders: List<ProviderInfo>? by lazy {
-//        val applicationId = context.packageName
-//        context.packageManager
-//                .getInstalledPackages(PackageManager.GET_PROVIDERS)
-//                .firstOrNull { it.packageName == applicationId }
-//                ?.providers?.toList()
-//    }
+    @Override fun onAttachedToEngine(@NonNull binding: FlutterPluginBinding?) {
+        onAttachedToEngine(binding.getApplicationContext(), binding.getBinaryMessenger());
+    }
+
+    @Override fun onDetachedFromEngine(@NonNull binding: FlutterPluginBinding?) {
+        context = null;
+        if (flutterChannel != null) {
+            flutterChannel.setMethodCallHandler(null);
+            flutterChannel = null;
+        }
+    }
+
 }

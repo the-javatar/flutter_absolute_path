@@ -2,7 +2,10 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file://$PROJECT_DIR$/flutter_absolute_path.iml" filepath="$PROJECT_DIR$/flutter_absolute_path.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/flutter_absolute_path.iml" filepath="$PROJECT_DIR$/.idea/modules/flutter_absolute_path.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/flutter_absolute_path.androidTest.iml" filepath="$PROJECT_DIR$/.idea/modules/flutter_absolute_path.androidTest.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/flutter_absolute_path.main.iml" filepath="$PROJECT_DIR$/.idea/modules/flutter_absolute_path.main.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/flutter_absolute_path.unitTest.iml" filepath="$PROJECT_DIR$/.idea/modules/flutter_absolute_path.unitTest.iml" />
     </modules>
   </component>
 </project>
