@@ -2,7 +2,9 @@ package com.kasem.flutter_absolute_path
 
 import android.content.Context
 import android.net.Uri
+
 import io.flutter.embedding.engine.plugins.FlutterPlugin
+import io.flutter.plugin.common.BinaryMessenger
 import io.flutter.plugin.common.MethodCall
 import io.flutter.plugin.common.MethodChannel
 import io.flutter.plugin.common.MethodChannel.MethodCallHandler
@@ -11,6 +13,7 @@ import io.flutter.plugin.common.MethodChannel.MethodCallHandler
 class FlutterAbsolutePathPlugin() : MethodCallHandler, FlutterPlugin {
 
     private var context: Context? = null
+    private var flutterChannel: MethodChannel? = null
 
     companion object {
         @JvmStatic
@@ -20,7 +23,7 @@ class FlutterAbsolutePathPlugin() : MethodCallHandler, FlutterPlugin {
         }
     }
 
-    override fun onMethodCall(call: MethodCall, result: Result) {
+    override fun onMethodCall(call: MethodCall, result: MethodChannel.Result) {
         when {
             call.method == "getAbsolutePath" -> {
                 val uriString = call.argument<Any>("uri") as String
@@ -32,11 +35,11 @@ class FlutterAbsolutePathPlugin() : MethodCallHandler, FlutterPlugin {
         }
     }
 
-    @Override fun onAttachedToEngine(@NonNull binding: FlutterPluginBinding?) {
+    @Override fun onAttachedToEngine(binding: FlutterPluginBinding?) {
         onAttachedToEngine(binding.getApplicationContext(), binding.getBinaryMessenger());
     }
 
-    @Override fun onDetachedFromEngine(@NonNull binding: FlutterPluginBinding?) {
+    @Override fun onDetachedFromEngine(binding: FlutterPluginBinding?) {
         context = null;
         if (flutterChannel != null) {
             flutterChannel.setMethodCallHandler(null);
